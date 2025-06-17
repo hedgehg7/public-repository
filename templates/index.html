@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="header-container">
+        <h2>Список продукции</h2>
+        <a href="{{ url_for('add_product') }}" class="btn">Добавить продукт</a>
+    </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <div class="products-container">
+        {% for product in products %}
+            <div class="product-card">
+                <div class="product-details">
+                    <div class="product-info">
+                        <div class="product-field">
+                            <span class="field-label">Артикул:</span>
+                            <span class="field-value">{{ product.article_number }}</span>
+                        </div>
+                        <div class="product-field">
+                            <span class="field-label">Наименование:</span>
+                            <span class="field-value">{{ product.name }}</span>
+                        </div>
+                        <div class="product-field">
+                            <span class="field-label">Тип:</span>
+                            <span class="field-value">{{ product.type_name }}</span>
+                        </div>
+                        <div class="product-field">
+                            <span class="field-label">Ширина рулона:</span>
+                            <span class="field-value">{{ "%.2f"|format(product.roll_width) }} м</span>
+                        </div>
+                    </div>
+                    
+                    <div class="product-prices">
+                        <div class="price-item">
+                            <span class="price-label">Минимальная цена:</span>
+                            <span class="price-value">{{ "%.2f"|format(product.min_partner_price) }} ₽</span>
+                        </div>
+                        <div class="price-item">
+                            <span class="price-label">Расчетная стоимость:</span>
+                            <span class="price-value">{{ "%.2f"|format(product.calculated_cost or 0) }} ₽</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="product-actions">
+                    <a href="{{ url_for('edit_product', product_id=product.id) }}" class="action-btn">Редактировать</a>
+                    <a href="{{ url_for('product_materials', product_id=product.id) }}" class="action-btn">Материалы</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="footer-actions">
+        <a href="{{ url_for('calculate_material') }}" class="btn">Расчет материалов</a>
+    </div>
+    
+    <style>
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .products-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .product-card {
+            background-color: #FFFFFF;
+            border: 1px solid #BBD9B2;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+        
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .product-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .product-prices {
+            text-align: right;
+            min-width: 250px;
+        }
+        
+        .product-field {
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .field-label {
+            font-weight: bold;
+            color: #2D6033;
+            min-width: 150px;
+        }
+        
+        .field-value {
+            flex: 1;
+        }
+        
+        .price-item {
+            margin-bottom: 10px;
+        }
+        
+        .price-label {
+            font-weight: bold;
+            color: #2D6033;
+            margin-right: 10px;
+        }
+        
+        .price-value {
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid #BBD9B2;
+            padding-top: 15px;
+        }
+        
+        .action-btn {
+            background-color: #2D6033;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .action-btn:hover {
+            background-color: #1e4724;
+        }
+        
+        .footer-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .product-details {
+                flex-direction: column;
+            }
+            
+            .product-prices {
+                text-align: left;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+{% endblock %}

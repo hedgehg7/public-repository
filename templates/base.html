@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Wallpaper Production System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gabriola&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.ico') }}" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Gabriola', cursive;
+            background-color: #FFFFFF;
+            color: #2D6033;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #BBD9B2;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .logo {
+            height: 80px;
+            margin-right: 20px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .btn {
+            background-color: #2D6033;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Gabriola', cursive;
+            font-size: 1.2em;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #BBD9B2;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #BBD9B2;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #BBD9B2;
+            border-radius: 4px;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Company Logo" class="logo">
+        <h1>Wallpaper Production System</h1>
+    </div>
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
